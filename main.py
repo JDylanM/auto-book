@@ -44,35 +44,44 @@ def insert_reservations(schedule, reservations):
 
 
 #TODO: HERE
-"""def find_book_times(schedule):
-	book_times = []
+def find_holes(schedule):
+	holes = []
 	found = False
 	start_time = 0
+	print("len of schedule {}".format(len(schedule)))
 	for i, free in enumerate(schedule):
+		print(i)
 		if(free):
+			print("free on spot {}".format(i+8))
+			print(i)
 			found = True
 			start_time = i+8
-			print("true")
 		else:
 			if(found):
+				end_time = i+8
+				holes.append([start_time, end_time])
+				found = False
 
-			found = False:
-"""
+		if(i+1==len(schedule) and found):
+			print("true")			
+			end_time = i+9
+			holes.append([start_time, end_time])
+			found = False
+		
+	return holes
 
 def main():
 	url = "https://cloud.timeedit.net/liu/web/schema/ri157366X88Z59Q5Z46g7Y35y5056Y03Q09gQY5Q56777.json"
 	reservations = get_reservations(url)
-	print(reservations)
 
 	#Will recieve an array [True, True, True, True, True, True, True, True, True]
 	#                       08-09  09-10 10-11 11-12 13-14 14-15 15-16 16-17
 	# True if free, false if not free
 	schedule = init_schedule()
 	schedule = insert_reservations(schedule, reservations)
-	#book_times = find_book_times(schedule)
-
+	holes = find_holes(schedule)
 	print(schedule)
+	print(holes)
 
 if __name__ == "__main__":
-	print("hello")
 	main()

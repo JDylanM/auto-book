@@ -1,1 +1,91 @@
-{"columnheaders":["Kurs","Lokal","Undervisningstyp","Lärare","Studentgrupp","Fria grupper","Information till student","Studentförening","URL"],"info":{"reservationlimit":200,"reservationcount":5},"reservations":[{"id":"1451695","startdate":"2018-12-14","starttime":"08:15","enddate":"2018-12-14","endtime":"10:00","columns":["TATA79","S10","Handledning","","U2.a","","","",""]},{"id":"1440502","startdate":"2018-12-14","starttime":"10:15","enddate":"2018-12-14","endtime":"12:00","columns":["TATA79","S10","Lektion","Anja Hellander","U2.a, U2.b","","","",""]},{"id":"1599609","startdate":"2018-12-14","starttime":"13:15","enddate":"2018-12-14","endtime":"15:00","columns":["TATA79","R42","Handledning","","U2.b","","","",""]},{"id":"1446960","startdate":"2018-12-14","starttime":"15:15","enddate":"2018-12-14","endtime":"17:00","columns":["TDDD86","SU10, SU11","Laboration","Rasmus Viitanen","U2.a","","","",""]},{"id":"1446964","startdate":"2018-12-14","starttime":"15:15","enddate":"2018-12-14","endtime":"17:00","columns":["TDDD86","SU12, SU13","Laboration","Jani Jokinen","U2.b","","","",""]}]}
+{
+  "columnheaders": [
+    "Kurs",
+    "Lokal",
+    "Undervisningstyp",
+    "Lärare",
+    "Studentgrupp",
+    "Fria grupper",
+    "Information till student",
+    "Studentförening",
+    "URL"
+  ],
+  "info": {
+    "reservationlimit": 200,
+    "reservationcount": 5
+  },
+  "reservations": [
+    {
+      "id": "1451695",
+      "startdate": "2018-12-14",
+      "starttime": "08:15",
+      "enddate": "2018-12-14",
+      "endtime": "10:00",
+      "columns": [
+        "TATA79",
+        "S10",
+        "Handledning",
+        "",
+        "U2.a",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "id": "1440502",
+      "startdate": "2018-12-14",
+      "starttime": "10:15",
+      "enddate": "2018-12-14",
+      "endtime": "12:00",
+      "columns": [
+        "TATA79",
+        "S10",
+        "Lektion",
+        "Anja Hellander",
+        "U2.a, U2.b",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "id": "1599609",
+      "startdate": "2018-12-14",
+      "starttime": "13:15",
+      "enddate": "2018-12-14",
+      "endtime": "15:00",
+      "columns": [
+        "TATA79",
+        "R42",
+        "Handledning",
+        "",
+        "U2.b",
+        "",
+        "",
+        "",
+        ""
+      ]
+    },
+    {
+      "id": "1446960",
+      "startdate": "2018-12-14",
+      "starttime": "15:15",
+      "enddate": "2018-12-14",
+      "endtime": "16:00",
+      "columns": [
+        "TDDD86",
+        "SU10, SU11",
+        "Laboration",
+        "Rasmus Viitanen",
+        "U2.a",
+        "",
+        "",
+        "",
+        ""
+      ]
+    }
+  ]
+}
