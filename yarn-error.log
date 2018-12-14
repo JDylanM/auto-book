@@ -1,0 +1,32 @@
+Arguments: 
+  /home/dylan/.nvm/versions/node/v8.1.0/bin/node /usr/share/yarn/bin/yarn.js start
+
+PATH: 
+  /home/dylan/anaconda3/bin:/home/dylan/.nvm/versions/node/v8.1.0/bin:/home/dylan/bin:/home/dylan/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/opt/cmake/bin:/home/dylan/Android/Sdk//tools:/home/dylan/Android/Sdk//platform-tools:/home/dylan/bin/pintos
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.1.0
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Couldn't find a package.json file in "/home/dylan/Desktop/scheduler"
+      at new MessageError (/usr/share/yarn/lib/cli.js:186:110)
+      at /usr/share/yarn/lib/cli.js:40048:15
+      at Generator.next (<anonymous>)
+      at step (/usr/share/yarn/lib/cli.js:98:30)
+      at /usr/share/yarn/lib/cli.js:109:13
+      at <anonymous>
