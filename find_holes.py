@@ -43,7 +43,6 @@ def insert_reservations(schedule, reservations):
 	return schedule
 
 
-#TODO: HERE
 def find_holes(schedule):
 	holes = []
 	found = False
