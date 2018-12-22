@@ -2,8 +2,11 @@ import requests
 from constants import *
 
 #TODO:
-# classes of find_holes + booker
-#3. think of way to integrate both modules
+#1  classes of find_holes + booker
+#2. think of way to integrate both modules
+#3. send verification email
+#4. error handling, logging(?)
+
 
 
 def login(session):
