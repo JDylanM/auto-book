@@ -1,10 +1,5 @@
 import urllib.request, json
 
-# TODO:
-# Calculate sequential times in an array[[start_time, end_time], [start_time, end_time]]
-# [[08.00, 10.00], [13.00, 15.00]]
-# Int or string?
-
 def get_reservations(url):
 	"""
 	Code for production
@@ -62,11 +57,11 @@ def find_holes(schedule):
 				found = False
 
 		if(i+1==len(schedule) and found):
-			print("true")			
+			print("true")
 			end_time = i+9
 			holes.append([start_time, end_time])
 			found = False
-		
+
 	return holes
 
 def main():
