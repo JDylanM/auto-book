@@ -8,6 +8,7 @@ pylint = "*"
 
 [packages]
 requests = "*"
+schedule = "*"
 
 [requires]
 python_version = "3.6"
