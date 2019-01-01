@@ -5,7 +5,9 @@ import sys
 from Booker import *
 from constants import *
 
-def job(date, start_time, end_time, email):
+#TODO, make a class out of this...
+
+def book(date, start_time, end_time, email):
 	booker = Booker()
 	print("Signing in...")
 	booker.login(account, password)
@@ -15,6 +17,19 @@ def job(date, start_time, end_time, email):
 	print("Sending verification email...")
 	booker.send_email(book_id, email)
 	print("Booking done! Hopefully without errors heheheuhue")	
+	print("Ending program")
+	sys.exit(0)
+
+def job(in_date, start_time, end_time, email):
+	print("Doing job")
+	#print(in_date)
+	#print(start_time)
+	today = str(date.today()).replace("-", "")
+	#print(today)
+	print("Checking date...")
+	if(in_date == today):
+		book(in_date, start_time, end_time, email)
+
 
 
 if __name__ == "__main__":
@@ -25,23 +40,28 @@ if __name__ == "__main__":
 
 	today = str(date.today()).replace("-", "")
 
-	print(today)
+	#print(today)
+	#TODO: Fix mess below
 	in_date = sys.argv[1]
 	start_time = sys.argv[2]
 	end_time = sys.argv[3]
 	email = sys.argv[4]
 
-	if(today == in_date):
-		print("tja")
-		job(in_date, start_time, end_time, email)
+	tmp_date = datetime.strptime(in_date, '%Y%m%d').date()
+	tomorrow = str(date.today() + timedelta(days=1)).replace("-", "")
+	print(tomorrow)
+
+	if(today == in_date or tomorrow == in_date):
+		print('Today/tomorrow is the same as booking date')
+		book(in_date, start_time, end_time, email)
 	else:
-		in_date = datetime.strptime(in_date, '%Y%m%d').date()
-		day_before = str(in_date - timedelta(days=1))
-		print(day_before)
-		#TODO schedule at correct in_date
-			#while True:
-			#	schedule.every().day.at("23:26").do(job,'It is 01:00')
-			#	schedule.run_pending()
-			#	time.sleep(60) # wait one minute
+		print('Scheduling booking to day before 00:01')
+		tmp_date = datetime.strptime(in_date, '%Y%m%d').date()
+		day_before = str(tmp_date - timedelta(days=1))
+		#print(day_before)
+		schedule.every().day.at("00:01").do(job, day_before, start_time, end_time, email)
+		while True:
+			schedule.run_pending()
+			time.sleep(60) # wait one minute
 
 

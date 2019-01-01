@@ -49,7 +49,7 @@ class Booker:
 
 	def book(self, date, starttime, enddtime):
 		rooms = self.__get_rooms(date, starttime, enddtime)
-		print(rooms)
+		#print(rooms)
 		first_best = rooms[0]['idAndType']
 
 
@@ -83,7 +83,7 @@ class Booker:
 
 	#TODO this function
 	def send_email(self, id, email):
-		print ("send email {}".format(id))
+		#print ("send email {}".format(id))
 
 		params = {
 			'id': id,
