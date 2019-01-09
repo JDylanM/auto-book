@@ -5,7 +5,26 @@ import sys
 from Booker import *
 from constants import *
 
-#TODO, make a class out of this...
+#TODO: make a class out of this...
+#TODO: test all of this
+
+class Executer:
+	def __init__(self):
+		self.__booker = Booker()
+
+	def book(self, date, start_time, end_time, email):
+		print("Signing in...")
+		print(password)
+		self.__booker.login(account, password)
+		#self.__booker.get_rooms("20181222-20181222", "14:00", "15:00")
+		print("Booking...")
+		book_id = self.__booker.book(date, start_time, end_time)
+		print("Sending email...")
+		self.__booker.send_email(book_id, email)
+		print("Booking done!")	
+		print("Ending program")
+		sys.exit(0)
+
 
 def book(date, start_time, end_time, email):
 	booker = Booker()
@@ -33,6 +52,11 @@ def job(in_date, start_time, end_time, email):
 
 
 if __name__ == "__main__":
+	#using dependency injection
+	executer = Executer()
+	executer.book('20180110', '19', '20', 'dylma900@student.liu.se')
+
+"""
 	print(type(sys.argv))
 	if(len(sys.argv) != 5):
 		raise ValueError("Need 5 arguments, example: python3 executer.py 20190102 14 15 dylma900@student.liu.se")
@@ -63,5 +87,4 @@ if __name__ == "__main__":
 		while True:
 			schedule.run_pending()
 			time.sleep(60) # wait one minute
-
-
+"""
