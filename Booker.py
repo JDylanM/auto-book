@@ -24,6 +24,7 @@ class Booker:
 			data=payload,
 		)
 
+	#'26.A-huset'
 	def __get_rooms(self, date, starttime, enddtime):
 		payload = {
 			'max': '1',
@@ -36,7 +37,7 @@ class Booker:
 			'l': 'sv_SE',
 			'types': '195',
 			'subtypes': '230,231',
-			'fe': ['26.A-huset', '23.Valla'],
+			'fe': ['26.Key', '23.Valla'],
 			'dates': date,
 			'starttime': starttime,
 			'endtime': enddtime
@@ -71,14 +72,11 @@ class Booker:
 			'https://cloud.timeedit.net/liu/web/wr_stud/ri1Q8.html',
 			data=payload
 		)
-		#print(response.headers)
-		#print(response.status_code)
-		#print(response.url)
+
 		# use (?<=\?id=)\d* regexp to find id and send email
 		match = re.search('(?<=\?id=)\d*', response.url)
 		id = match.group(0)
-		#print ( id )
-		#self.send_email(id)
+		
 		return id
 
 	#TODO this function
