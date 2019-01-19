@@ -8,4 +8,4 @@ password = test
 ```
 python3 executer.py 20190102 14 15 dylma900@student.liu.se
 ```
-Will book a room 20190102, from 14-15 and send a confirmation email to the given email.
+The command will book a room 20190102, from 14-15 and send a confirmation email to dylma900@student.liu.se.
