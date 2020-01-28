@@ -1,3 +1,5 @@
 constants.txt
 .vscode
 constants.*
+token.pickle
+credentials.json

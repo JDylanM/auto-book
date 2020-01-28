@@ -11,7 +11,7 @@ class Booker:
 		self.__session = requests.session()
 
 	def login(self, acc, pw):
-		self.__session.get('https://se.timeedit.net/web/liu/db1/timeedit/sso/?ssoserver=liu_stud_cas&entry=wr_stud&back=https%3A%2F%2Fcloud.timeedit.net%2Fliu%2Fweb%2Fwr_stud%2F')
+		self.__session.get('https://cloud.timeedit.net/liu/web/timeedit/sso/?ssoserver=liu_stud_cas&entry=wr_stud&back=https%3A%2F%2Fcloud.timeedit.net%2Fliu%2Fweb%2Fwr_stud%2F')
 
 		payload = {
 			'j_username': acc,
@@ -25,7 +25,7 @@ class Booker:
 		)
 
 	#'26.A-huset'
-	def __get_rooms(self, date, starttime, enddtime):
+	def __get_rooms(self, date, starttime, endtime, acc, pw):
 		payload = {
 			'max': '1',
 			'fr': 'f',
@@ -40,39 +40,47 @@ class Booker:
 			'fe': ['26.Key', '23.Valla'],
 			'dates': date,
 			'starttime': starttime,
-			'endtime': enddtime
+			'endtime': endtime
 		}
+
+		headers = {'user-agent': 'chrome'}
 
 		# bokade rum här
 		rooms = self.__session.get('https://cloud.timeedit.net/liu/web/wr_stud/objects.json',params=payload)
 		rooms = json.loads(rooms.text)
 		return rooms['objects']
 
-	def book(self, date, starttime, enddtime):
-		rooms = self.__get_rooms(date, starttime, enddtime)
-		#print(rooms)
+	def book(self, date, starttime, endtime, acc, pw):
+		rooms = self.__get_rooms(date, starttime, endtime, acc, pw)
+		print(rooms)
 		first_best = rooms[0]['idAndType']
-
-
+		if ":" not in starttime:
+			starttime = starttime + ':15'
+		if ":" not in endtime:
+			endtime = endtime + ':00'
 		#o: '435564.184' is unique to each account?
 		payload = {
 			'kind': 'reserve',
 			'nocache': '4',
 			'l': 'sv_SE',
-			'o': [first_best, '435564.184'],
+			'o': [first_best, '389614.184'],
 			'aos': '',
 			'dates': date,
 			'starttime': starttime,
-			'endtime': enddtime,
-			'url': 'https://cloud.timeedit.net/liu/web/wr_stud/ri1Q8.html#00263991',
+			'endtime': endtime,
+			'url': 'https://cloud.timeedit.net/liu/web/wr_stud/ri1Q8.html',
 			'fe7': '',
 		}
+		
+		print(payload)
 
 		response = self.__session.post(
 			'https://cloud.timeedit.net/liu/web/wr_stud/ri1Q8.html',
 			data=payload
 		)
 
+
+		print(response.reason)
 		# use (?<=\?id=)\d* regexp to find id and send email
 		match = re.search('(?<=\?id=)\d*', response.url)
 		id = match.group(0)
