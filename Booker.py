@@ -71,8 +71,6 @@ class Booker:
 			'url': 'https://cloud.timeedit.net/liu/web/wr_stud/ri1Q8.html',
 			'fe7': '',
 		}
-		
-		print(payload)
 
 		response = self.__session.post(
 			'https://cloud.timeedit.net/liu/web/wr_stud/ri1Q8.html',
@@ -80,7 +78,6 @@ class Booker:
 		)
 
 
-		print(response.reason)
 		# use (?<=\?id=)\d* regexp to find id and send email
 		match = re.search('(?<=\?id=)\d*', response.url)
 		id = match.group(0)
