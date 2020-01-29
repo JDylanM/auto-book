@@ -4,6 +4,7 @@ from datetime import date, timedelta, datetime
 import sys
 from Booker import *
 from Schedule import *
+from CalendarHandler import *
 from constants import *
 
 #TODO: Book many in a row
@@ -11,11 +12,10 @@ from constants import *
 #TODO: Error handling
 #TODO: test
 
-
 class Executer:
-	#def __init__(self):
+	def __init__(self):
+		self.__calender = CalendarHandler()
 		
-
 	def book_one(self, in_date, start_time, end_time, email):
 		self.__in_date = in_date
 		self.__start_time = start_time
@@ -45,16 +45,20 @@ class Executer:
 			start_date = reservation["startdate"].replace("-", "")
 			start_time = reservation["starttime"][:2]
 			end_time = reservation["endtime"][:2]
-			print("{} {} {}".format(start_date, start_time, end_time))
+			#self.book_one(start_date, start_time, end_time, email)
+			self.book_one("20200129", "19", "20", email)
+			break
 				
 	def __book(self):
 		print("Signing in...")
 		booker = Booker()
 		booker.login(account, password)
 		print("Booking...")
-		book_id = booker.book(self.__in_date, self.__start_time, self.__end_time, account, password)
+		book_id, location = booker.book(self.__in_date, self.__start_time, self.__end_time, account, password)
 		print("Sending email...")
 		booker.send_email(book_id, self.__email)
+		print("Adding in calendar...")
+		self.__calender.book(self.__in_date, self.__start_time, self.__end_time, location)
 		print("Booking done!")	
 		print("Ending program")
 		sys.exit(0)
@@ -68,17 +72,15 @@ class Executer:
 
 
 if __name__ == "__main__":
-	if(len(sys.argv) != 5):
-		raise ValueError("Need 5 arguments, example: python3 executer.py 20190102 14 15 dylma900@student.liu.se")
-		sys.exit(0)
-
-	in_date = sys.argv[1]
-	start_time = sys.argv[2]
-	end_time = sys.argv[3]
-	email = sys.argv[4]
-
-	s = Schedule("https://cloud.timeedit.net/liu/web/schema/ri167XQ5020Z57Qm5Z085Q56yYYg409x0Y93Y5gQ4076696Z96Z4QyyQo.json")
-	reservations = s.get_reservations()
 	executer = Executer()
-	#executer.book_many(reservations, email)
-	executer.book_one(in_date, start_time, end_time, email)
+	if(len(sys.argv) != 5):
+		in_date = sys.argv[1]
+		start_time = sys.argv[2]
+		end_time = sys.argv[3]
+		email = sys.argv[4]
+		executer.book_one(in_date, start_time, end_time, email)
+	else:
+		s = Schedule("https://cloud.timeedit.net/liu/web/schema/ri167XQ5020Z57Qm5Z085Q56yYYg409x0Y93Y5gQ4076696Z96Z4QyyQo.json")
+		reservations = s.get_reservations()
+		email = "dylma900@student.liu.se"
+		executer.book_many(reservations, email)

@@ -4,6 +4,7 @@ from constants import *
 #TODO:
 #1. think of way to integrate both modules
 #2. error handling, logging(?)
+#3. switch between accs
 
 
 class Booker:
@@ -37,7 +38,7 @@ class Booker:
 			'l': 'sv_SE',
 			'types': '195',
 			'subtypes': '230,231',
-			'fe': ['26.Key', '23.Valla'],
+			'fe': ['26.Studenthuset', '23.Valla'],
 			'dates': date,
 			'starttime': starttime,
 			'endtime': endtime
@@ -52,18 +53,17 @@ class Booker:
 
 	def book(self, date, starttime, endtime, acc, pw):
 		rooms = self.__get_rooms(date, starttime, endtime, acc, pw)
-		print(rooms)
 		first_best = rooms[0]['idAndType']
 		if ":" not in starttime:
 			starttime = starttime + ':15'
 		if ":" not in endtime:
 			endtime = endtime + ':00'
-		#o: '435564.184' is unique to each account?
+		#o: '435564.184' = Dylan booking person, even though other account books
 		payload = {
 			'kind': 'reserve',
 			'nocache': '4',
 			'l': 'sv_SE',
-			'o': [first_best, '389614.184'],
+			'o': [first_best, '435564.184'],
 			'aos': '',
 			'dates': date,
 			'starttime': starttime,
@@ -81,8 +81,10 @@ class Booker:
 		# use (?<=\?id=)\d* regexp to find id and send email
 		match = re.search('(?<=\?id=)\d*', response.url)
 		id = match.group(0)
-		
-		return id
+
+		location = rooms[0]['fields']['Signatur']
+
+		return id, location
 
 	#TODO this function
 	def send_email(self, id, email):
@@ -98,7 +100,7 @@ class Booker:
 		}
 
 		payload = {
-			'mail': ''
+			'mail': 'Grabana bot levererar ännu en gång'
 		}
 
 		response = self.__session.post(
