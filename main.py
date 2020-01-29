@@ -15,6 +15,7 @@ from constants import *
 class Executer:
 	def __init__(self):
 		self.__calender = CalendarHandler()
+		self.__acc_nr = 0
 		
 	def book_one(self, in_date, start_time, end_time, email):
 		self.__in_date = in_date
@@ -41,27 +42,36 @@ class Executer:
 
 	def book_many(self, reservations, email):
 		print("Reserving {} number of meetings".format(len(reservations)))
-		for reservation in reservations:
+		print("--------------------------------------")
+		for reservation in reservations[:2]:
 			start_date = reservation["startdate"].replace("-", "")
 			start_time = reservation["starttime"][:2]
 			end_time = reservation["endtime"][:2]
 			#self.book_one(start_date, start_time, end_time, email)
 			self.book_one("20200129", "19", "20", email)
-			break
+			print("--------------------------------------")
 				
 	def __book(self):
-		print("Signing in...")
 		booker = Booker()
-		booker.login(account, password)
-		print("Booking...")
-		book_id, location = booker.book(self.__in_date, self.__start_time, self.__end_time, account, password)
+
+		#accounts from constants.py!
+		acc = accounts[self.__acc_nr]["acc"]
+		pw = accounts[self.__acc_nr]["pw"]
+		self.__acc_nr += 1
+		if self.__acc_nr == len(accounts):
+			self.__acc_nr = 0
+
+		
+		print("Signing in with account {}...".format(acc))
+		booker.login(acc, pw)
+		print("Booking....")
+		book_id, location = booker.book(self.__in_date, self.__start_time, self.__end_time, acc, pw)
 		print("Sending email...")
 		booker.send_email(book_id, self.__email)
 		print("Adding in calendar...")
 		self.__calender.book(self.__in_date, self.__start_time, self.__end_time, location)
 		print("Booking done!")	
-		print("Ending program")
-		sys.exit(0)
+		print("--------------------------------------")
 
 	def __job(self, book_day):
 		print("Checking date...")
@@ -73,7 +83,7 @@ class Executer:
 
 if __name__ == "__main__":
 	executer = Executer()
-	if(len(sys.argv) != 5):
+	if(len(sys.argv) == 5):
 		in_date = sys.argv[1]
 		start_time = sys.argv[2]
 		end_time = sys.argv[3]
