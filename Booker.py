@@ -26,7 +26,7 @@ class Booker:
 		)
 
 	#'26.A-huset'
-	def __get_rooms(self, date, starttime, endtime, acc, pw):
+	def __get_rooms(self, date, starttime, endtime, acc, pw, building):
 		payload = {
 			'max': '1',
 			'fr': 'f',
@@ -38,7 +38,7 @@ class Booker:
 			'l': 'sv_SE',
 			'types': '195',
 			'subtypes': '230,231',
-			'fe': ['26.Studenthuset', '23.Valla'],
+			'fe': [building, '23.Valla'],
 			'dates': date,
 			'starttime': starttime,
 			'endtime': endtime
@@ -49,11 +49,21 @@ class Booker:
 		# bokade rum här
 		rooms = self.__session.get('https://cloud.timeedit.net/liu/web/wr_stud/objects.json',params=payload)
 		rooms = json.loads(rooms.text)
+		if rooms == "Inga sökresultat":
+			return False
 		return rooms['objects']
 
 	def book(self, date, starttime, endtime, acc, pw):
-		rooms = self.__get_rooms(date, starttime, endtime, acc, pw)
-		first_best = rooms[0]['idAndType']
+		rooms = self.__get_rooms(date, starttime, endtime, acc, pw, '26.Studenthuset')
+
+		#Try other building if full in previous building
+		first_best = ""
+		if rooms:
+			first_best = rooms[0]['idAndType']
+		else:
+			rooms = self.__get_rooms(date, starttime, endtime, acc, pw, '26.Key')
+			first_best = rooms[0]['idAndType']
+
 		if ":" not in starttime:
 			starttime = starttime + ':15'
 		if ":" not in endtime:
