@@ -25,10 +25,14 @@ class Executer:
 
 		today = str(date.today()).replace("-", "")
 		tomorrow = str(date.today() + timedelta(days=1)).replace("-", "")
+		trimorrow = str(date.today() + timedelta(days=2)).replace("-", "")
 
-		if(today == in_date or tomorrow == in_date):
-			print('Today/tomorrow is the same as booking date')
+		if(today == in_date or tomorrow == in_date or trimorrow == in_date):
 			self.__book()
+		else:
+			print("Cannot book {} yet! Exiting program".format(self.__in_date))
+			sys.exit(0)
+		"""
 		else:
 			tmp_date = datetime.strptime(in_date, '%Y%m%d').date()
 			book_day = str(tmp_date - timedelta(days=2)).replace("-", "")
@@ -39,16 +43,17 @@ class Executer:
 			while True:
 				schedule.run_pending()
 				time.sleep(60) # wait one minute
+		"""
 
 	def book_many(self, reservations, email):
-		print("Reserving {} number of meetings".format(len(reservations)))
+		print("Number of meetings left {}".format(len(reservations)))
 		print("--------------------------------------")
 		for reservation in reservations[:2]:
 			start_date = reservation["startdate"].replace("-", "")
 			start_time = reservation["starttime"][:2]
 			end_time = reservation["endtime"][:2]
-			#self.book_one(start_date, start_time, end_time, email)
-			self.book_one("20200129", "19", "20", email)
+			self.book_one(start_date, start_time, end_time, email)
+			#self.book_one("20200129", "19", "20", email)
 			print("--------------------------------------")
 				
 	def __book(self):
@@ -64,7 +69,7 @@ class Executer:
 		
 		print("Signing in with account {}...".format(acc))
 		booker.login(acc, pw)
-		print("Booking....")
+		print("Booking {} {}-{}....".format(self.__in_date, self.__start_time, self.__end_time))
 		book_id, location = booker.book(self.__in_date, self.__start_time, self.__end_time, acc, pw)
 		print("Sending email...")
 		booker.send_email(book_id, self.__email)
@@ -90,7 +95,7 @@ if __name__ == "__main__":
 		email = sys.argv[4]
 		executer.book_one(in_date, start_time, end_time, email)
 	else:
-		s = Schedule("https://cloud.timeedit.net/liu/web/schema/ri167XQ5020Z57Qm5Z085Q56yYYg409x0Y93Y5gQ4076696Z96Z4QyyQo.json")
+		s = Schedule("https://cloud.timeedit.net/liu/web/schema/ri17Z036X45Z04Q6Z86g2Y90yQ046Y55x06gQY6Q557950g077Y5065y9Q9Zy6Qo.json")
 		reservations = s.get_reservations()
 		email = "dylma900@student.liu.se"
 		executer.book_many(reservations, email)
