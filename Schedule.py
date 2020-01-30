@@ -16,8 +16,6 @@ class Schedule:
 		"""
 		with urllib.request.urlopen(self.__url) as url:
 			data = json.loads(url.read().decode())
-			print(self.__url)
-			print("Done...")
 
 		return data["reservations"]
 		

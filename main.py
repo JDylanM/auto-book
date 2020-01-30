@@ -48,8 +48,11 @@ class Executer:
 	def book_many(self, reservations, email):
 		print("Number of meetings left {}".format(len(reservations)))
 		print("--------------------------------------")
-		for reservation in reservations[:2]:
+		trimorrow = str(date.today() + timedelta(days=2)).replace("-", "")
+		for reservation in reservations:
 			start_date = reservation["startdate"].replace("-", "")
+			if trimorrow != start_date:
+				continue
 			start_time = reservation["starttime"][:2]
 			end_time = reservation["endtime"][:2]
 			self.book_one(start_date, start_time, end_time, email)
